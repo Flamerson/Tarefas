@@ -50,7 +50,8 @@ Pode verificar o sublinhado na imagem abaixo.
 
 Caso utilize Mysql é preciso realizar outras alterações nesse arquivo como o drive na linha 14 e o dialeto na linha 17, e também trazer a dependência no arquivo pom.xml
 
-Observe que o banco utilizado foi o PostgreSQL na versão mais recente.
+Observe que o banco utilizado foi o PostgreSQL na versão mais recente. <br/>
+O servidor utilizado para os testes foi o Tomcat na versão 9.0 e a Ide Eclipse.
 
 ## Observações finais
 
