@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<style>
+	
+		.text-input-better{
+			width:150px;
+			padding: 2px;
+		}
+		
+		.btn-initial{
+			font-size: 14px;
+			cursor:pointer;
+		}
+	
+	</style>
+<h:head>
+	<title>Pagina inicial</title>
+</h:head>
+<h:body>
+	<h:form>
+		<div  class="card">
+			<div class="grid ui-fluid">
+				<div class="ui-inputgroup">
+					<div class="ui-inputgroup-addon text-input-better">
+						<p:outputLabel value="Número: " />
+					</div>
+					<p:inputNumber value="#{tController.filterTar.id}" />
+				</div>
+			</div>
+			<br />
+		
+			<div class="grid ui-fluid">
+				<div class="ui-inputgroup">
+					<div class="ui-inputgroup-addon text-input-better">
+						<p:outputLabel value="Título/Descrição: " />
+					</div>
+					<p:inputText value="#{tController.filterTar.titulo}" />
+				</div>
+			</div>
+			<br />
+	
+			<div class="grid ui-fluid">
+				<div class="ui-inputgroup" style="box-sizing: unset">
+					<div class="ui-inputgroup-addon text-input-better" style="box-sizing:unset; padding-right: 35px">
+						<p:outputLabel value="Responsável:" />
+					</div>
+					<p:selectOneMenu label="Text 3" value="#{tController.filterTar.responsavel}">
+						<f:selectItem itemLabel="Responsável" itemValue="" />
+						<f:selectItem itemLabel="Flamerson" itemValue="Flamerson" />
+						<f:selectItem itemLabel="Maria" itemValue="Maria" />
+						<f:selectItem itemLabel="Pedro" itemValue="Pedro" />
+					</p:selectOneMenu>
+	
+			
+				<div class="ui-inputgroup-addon text-input-better" style="box-sizing:unset; padding-right: 10px">
+						<p:outputLabel value="Situação: " />
+					</div>
+					<p:selectOneMenu label="Em Andamento" value="#{tController.filterTar.situacao}">
+						<f:selectItem itemLabel="Em Andamento" itemValue="Em andamento"/>
+						<f:selectItem itemLabel="Concluido" itemValue="Concluida"/>
+					</p:selectOneMenu>
+	
+				<h:commandButton value="Buscar Tarefas" action="#{tController.filterList}" class="btn-initial" />
+				</div>
+			</div>
+		</div>
+		
+		<div style="text-align:center; padding-top:15px;">
+			<p:commandLink value="Cadastrar Novo" action="#{tController.redirectLink}" ajax="false"/>
+		</div>
+		
+	</h:form>
+
+	<div class="card crud-demo" style="margin-top: 50px">
+		<h:form>
+
+			<p:dataTable var="tar" value="#{tController.filter}">
+				<p:column headerText="Número">
+					<h:outputText value="#{tar.id}" />
+				</p:column>
+				<p:column headerText="Título">
+					<h:outputText value="#{tar.titulo}" />
+				</p:column>
+				<p:column headerText="Responsável">
+					<h:outputText value="#{tar.responsavel}" />
+				</p:column>
+
+				<p:column headerText="Ações" exportable="false">
+					<p:commandLink value="Editar" process="@this" update=":dialogs:manage-product-content"
+						oncomplete="PF('manageProductDialog').show()">
+						<f:setPropertyActionListener value="#{tar}"
+							target="#{tController.tarefa}"/>
+						<p:resetInput target=":dialogs:manage-product-content" />
+					</p:commandLink>
+					|
+					<p:commandLink value="Excluir" process="@this"
+						oncomplete="PF('deleteProductDialog').show()">
+						<f:setPropertyActionListener value="#{tar}"
+							target="#{tController.tarefa}" />
+					</p:commandLink>
+					|
+					<p:commandLink value="Concluir" process="@this"
+						oncomplete="PF('atualizarAcao').show()">
+						<f:setPropertyActionListener value="#{tar}"
+							target="#{tController.tarefa}" />
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+
+		</h:form>
+
+		<h:form id="dialogs">
+			<p:dialog header="Product Details" showEffect="fade" modal="true"
+				widgetVar="manageProductDialog" responsive="true">
+				<p:outputPanel id="manage-product-content" class="ui-fluid">
+					<p:outputPanel rendered="#{not empty tController.tarefa}">
+						<div class="field">
+							<p:outputLabel for="name">Título</p:outputLabel>
+							<p:inputText id="name" value="#{tController.tarefa.titulo}"
+								required="true" />
+						</div>
+						<div class="field">
+							<p:outputLabel for="description">Descrição</p:outputLabel>
+							<p:inputTextarea id="description"
+								value="#{tController.tarefa.descricao}" />
+						</div>
+						<div class="field">
+							<p:outputLabel for="description">Responsável</p:outputLabel>
+							<p:selectOneMenu label="Text 3"
+								value="#{tController.tarefa.responsavel}">
+								<f:selectItem itemLabel="Flamerson" itemValue="Flamerson" />
+								<f:selectItem itemLabel="Pedro" itemValue="Pedro" />
+								<f:selectItem itemLabel="Maria" itemValue="Maria" />
+							</p:selectOneMenu>
+						</div>
+						<div class="field">
+							<p:outputLabel for="description">Prioridade</p:outputLabel>
+							<p:selectOneMenu label="Text 3"
+								value="#{tController.tarefa.prioridade}">
+								<f:selectItem itemLabel="alta" itemValue="alta" />
+								<f:selectItem itemLabel="média" itemValue="media" />
+								<f:selectItem itemLabel="baixa" itemValue="baixa" />
+							</p:selectOneMenu>
+						</div>
+					</p:outputPanel>
+				</p:outputPanel>
+
+				<f:facet name="footer">
+					<p:commandButton value="Salvar" update="manage-product-content"
+						process="manage-product-content @this"
+						ajax="false"
+						action="#{tController.atualizar}"
+						onclick="PF('manageProductDialog').hide()" />
+					<p:commandButton value="Cancelar"
+						onclick="PF('manageProductDialog').hide()"
+						class="ui-button-secondary" type="button" />
+				</f:facet>
+			</p:dialog>
+
+			
+
+		</h:form>
+		
+		<h:form>
+			<p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade"
+				width="300" message="Deletar a tarefa?" header="Confirm"
+				severity="warn">
+				<p:commandButton value="Yes"
+					oncomplete="PF('deleteProductDialog').hide()"
+					action="#{tController.delete}" ajax="false"/>
+				<p:commandButton value="No"
+					onclick="PF('deleteProductDialog').hide()" />
+			</p:confirmDialog>
+		</h:form>
+
+		<h:form>
+			<p:confirmDialog widgetVar="atualizarAcao" showEffect="fade"
+				width="300" message="A tarefa foi concluida realmente?"
+				header="Confirm" severity="warn">
+				<p:commandButton value="Yes" oncomplete="PF('atualizarAcao').hide()"
+					action="#{tController.atualizarAcao}" ajax="false"/>
+				<p:commandButton value="No" onclick="PF('atualizarAcao').hide()" />
+			</p:confirmDialog>
+		</h:form>
+
+	</div>
+</h:body>
+</html>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+    >
+    <style>
+	
+		.text-input-better{
+			width:150px;
+			padding: 2px;
+		}
+	
+	</style>
+<h:head>
+	<title>Cadastrar tarefa</title>
+</h:head>
+<h:body>
+	<h:form style="display:flex; flex-direction: column; align-items: center; justify-content:center">
+		<div class="card" style="min-width: 90%">
+		<div class="grid ui-fluid">
+			<div class="ui-inputgroup">
+				<div class="ui-inputgroup-addon text-input-better" style="width= 50px ">
+					<p:outputLabel value="Título: " />
+				</div>
+				<p:inputText value="#{tController.tarefa.titulo}" />
+			</div>
+		</div>
+		<br/>
+		
+		<div class="grid ui-fluid">
+			<div class="ui-inputgroup">
+				<div class="ui-inputgroup-addon text-input-better">
+					<p:outputLabel value="Descrição: " />
+				</div>
+				<p:inputTextarea value="#{tController.tarefa.descricao}" />
+			</div>
+		</div>
+		<br/>
+		
+		<div class="grid ui-fluid">
+				<div class="ui-inputgroup">
+					<div class="ui-inputgroup-addon text-input-better" style="box-sizing:unset; padding-right: 35px">
+						<p:outputLabel value="Responsável: " />
+					</div>
+					<p:selectOneMenu label="Text 3" value="#{tController.tarefa.responsavel}">
+						<f:selectItem itemLabel="Flamerson" itemValue="Flamerson"/>
+						<f:selectItem itemLabel="Pedro" itemValue="Pedro" />
+						<f:selectItem itemLabel="Maria" itemValue="Maria" />
+					</p:selectOneMenu>
+					
+					<div class="ui-inputgroup-addon text-input-better" style="box-sizing:unset; padding-right: 20px">
+						<p:outputLabel value="Prioridade: " />
+					</div>
+					<p:selectOneMenu label="Text 1" value="#{tController.tarefa.prioridade}" >
+						<f:selectItem itemLabel="alta" itemValue="alta"/>
+						<f:selectItem itemLabel="média" itemValue="media"/>
+						<f:selectItem itemLabel="baixa" itemValue="baixa"/>
+					</p:selectOneMenu>			
+				
+			</div>
+		</div>
+		<br/>
+		
+		<div class="grid ui-fluid">
+			<div class="ui-inputgroup">
+				<div class="ui-inputgroup-addon text-input-better">
+					<p:outputLabel value="Deadline: " />
+				</div>
+				<p:calendar value="#{tController.tarefa.deadline}" pattern="dd/mm/yyyy" />
+			</div>
+		</div>
+		<br/>
+		
+		<div style="text-align: center">
+			<p:commandButton value="Cadastrar" action="#{tController.salvar}" ajax="false"/>
+		</div>
+		
+		</div>
+	</h:form>
+</h:body>
+</html>
